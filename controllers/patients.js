@@ -1,5 +1,5 @@
 import e from "express";
-import { counterModel, PatientModel } from "../models/PatientModel.js";
+import { PatientModel } from "../models/PatientModel.js";
 
 export const getPatients = async (req, res) => {
   try {
@@ -12,24 +12,8 @@ export const getPatients = async (req, res) => {
 
 export const createPatient = async (req, res) => {
   try {
-    counterModel.findOneAndUpdate(
-      { id: "autoval" },
-      { $inc: { seq: 1 } },
-      { new: true },
-      (err, cd) => {
-        let seqId;
-        if (cd == null) {
-          const newVal = new counterModel({ id: "autoval", seq: 1 });
-          newVal.save();
-        } else {
-          seqId = cd.seq;
-        }
-      }
-    );
-
     const newPatient = req.body;
-    console.log({ ...newPatient, id: seqId });
-    await PatientModel.create({ ...newPatient, id: seqId });
+    await PatientModel.create({ ...newPatient });
     res.status(200).json({ success: true });
   } catch (err) {
     res.status(500).json({ error: err });
