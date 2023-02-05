@@ -1,10 +1,16 @@
 import mongoose from "mongoose";
 import Inc from "mongoose-sequence";
+import { customAlphabet } from "nanoid";
+const nanoid = customAlphabet("1234567890abcdef", 10);
 const AutoIncrement = Inc(mongoose);
 
 const schema = new mongoose.Schema(
   {
     _id: Number,
+    patient_id: {
+      default: nanoid(),
+      type: String,
+    },
     title: {
       type: String,
       required: true,
@@ -18,7 +24,10 @@ const schema = new mongoose.Schema(
       required: true,
       default: "abc@gmail.com",
     },
-    phone: {
+    identity_number: {
+      type: Number,
+    },
+    phone_patient: {
       type: Number,
       default: 0,
     },
@@ -27,6 +36,10 @@ const schema = new mongoose.Schema(
     },
     sex: {
       type: String,
+    },
+    dob: {
+      type: Date,
+      default: Date.now(),
     },
   },
   { _id: false }

@@ -23,6 +23,7 @@ export const createPatient = async (req, res) => {
 export const updatePatient = async (req, res) => {
   try {
     const updatePatient = req.body;
+    console.log("id", req.params.id);
     const patient = await PatientModel.findByIdAndUpdate(
       req.params.id,
       updatePatient

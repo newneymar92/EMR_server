@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import posts from "./routers/patients.js";
+import patients from "./routers/patients.js";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
@@ -9,17 +9,14 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-const URI = "mongodb://localhost:27017/emr_ibme";
+const URI =
+  "mongodb+srv://anhtaihs_92:anhtaihs_92@cluster0.yjwlrzp.mongodb.net/ibme_emr";
 
 app.use(cors());
 app.use(express.json({ limit: "30mb" }));
 app.use(express.urlencoded({ extended: true, limit: "30mb" }));
 
-app.use("/emr_ibme", posts);
-
-app.get("/", (req, res) => {
-  res.send("Success");
-});
+app.use("/emr_ibme", patients);
 
 mongoose
   .connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
